@@ -91,15 +91,28 @@ var sumBelow = function (n) {
 // range(2,9); // [3,4,5,6,7,8]
 var range = function (x, y) {
   var rangeArr = [];
-  //this determines if your range goes up or down
-  const step = x > y ? -1 : 1;
-  if (x === y) {
-    return [];
+  var isFirstValLarger = x > y;
+
+  if (!isFirstValLarger) {
+    //is first value less than second range value
+    if (x < y - 1) {
+      //find smallest value between range values
+      var smallest = Math.min(x + 1, y - 1);
+      //push result of smallest value added by 1 to an array
+      rangeArr.push(smallest);
+      //recusively call range function with smallest value and y-1
+      return rangeArr.concat(range(smallest, y));
+    }
+  } else {
+    //is first value greater than second range value
+    if (x > y + 1) {
+      //find largest value between 
+      var largest = Math.max(x - 1, y + 1);
+      rangeArr.push(largest);
+      return rangeArr.concat(range(largest, y));
+    }
   }
-  if (x === y - step) {
-    return rangeArr;
-  }
-  return rangeArr.concat(x + step, range(x + step, y));
+  return [];
 };
 
 range(7, 2);
