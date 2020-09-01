@@ -200,25 +200,42 @@ var rMap = function (array, callback) {
 // };
 
 var countKeysInObj = function (obj, target) {
-  let numOfOccurances = 0;
+  let numOfKeyOccurances = 0;
   for (let key in obj) {
     if (key === target) {
-      numOfOccurances++;
+      numOfKeyOccurances++;
     } else if (typeof obj[key] === 'object') {
-      numOfOccurances += countKeysInObj(obj[key], target);
+      numOfKeyOccurances += countKeysInObj(obj[key], target);
     }
   }
-  return numOfOccurances;
+  return numOfKeyOccurances;
 };
 // countKeysInObj(obj, 'e') // 1
 // countKeysInObj(obj, 'e') // 2
 
 // 23. Write a function that counts the number of times a value occurs in an object.
-// var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
-// countValuesInObj(obj, 'r') // 2
-// countValuesInObj(obj, 'e') // 1
-var countValuesInObj = function (obj, value) {
+var obj = {
+  'e': { 'x': 'y' },
+  't': {
+    'r': { 'e': 'r' },
+    'p': { 'y': 'r' }
+  },
+  'y': 'e'
 };
+var countValuesInObj = function (obj, value) {
+  let numOfValueOccurances = 0;
+
+  for (let key in obj) {
+    if (obj[key] === value) {
+      numOfValueOccurances++;
+    } else if (typeof obj[key] === 'object') {
+      numOfValueOccurances += countValuesInObj(obj[key], value);
+    }
+  }
+  return numOfValueOccurances;
+};
+countValuesInObj(obj, 'r') // 2
+// countValuesInObj(obj, 'e') // 1
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
