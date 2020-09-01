@@ -99,8 +99,6 @@ var range = function (x, y) {
   return rangeArr.concat(x + step, range(x + step, y));
 };
 
-range(7, 2)
-
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
 // 8^2 = 8 x 8 = 64. Here, 8 is the base and 2 is the exponent.
@@ -192,11 +190,28 @@ var rMap = function (array, callback) {
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
-// var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
-// countKeysInObj(obj, 'r') // 1
-// countKeysInObj(obj, 'e') // 2
-var countKeysInObj = function (obj, key) {
+// var obj = {
+//   'e': { 'x': 'y' },
+//   't': {
+//     'e': { 'e': 'r' },
+//     'p': { 'y': 'r' }
+//   },
+//   'y': 'e'
+// };
+
+var countKeysInObj = function (obj, target) {
+  let numOfOccurances = 0;
+  for (let key in obj) {
+    if (key === target) {
+      numOfOccurances++;
+    } else if (typeof obj[key] === 'object') {
+      numOfOccurances += countKeysInObj(obj[key], target);
+    }
+  }
+  return numOfOccurances;
 };
+// countKeysInObj(obj, 'e') // 1
+// countKeysInObj(obj, 'e') // 2
 
 // 23. Write a function that counts the number of times a value occurs in an object.
 // var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
